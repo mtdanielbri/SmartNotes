@@ -1,0 +1,158 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 11px 12px 12px;
+  border: 1px solid color-mix(in srgb, var(--note-accent) 38%, transparent);
+  border-radius: var(--radius);
+  background: var(--note-bg);
+  color: var(--note-fg);
+  font-family: var(--note-font);
+  font-size: var(--note-size);
+  line-height: 1.42;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s,
+    border-color 0.15s;
+}
+
+/* Priority stripe on the left edge. */
+.card--has-priority:not(.card--sticky) {
+  box-shadow:
+    inset 3px 0 0 var(--prio),
+    var(--shadow-sm);
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--note-accent) 70%, transparent);
+  box-shadow: var(--shadow-md);
+}
+
+.card--has-priority:not(.card--sticky):hover {
+  box-shadow:
+    inset 3px 0 0 var(--prio),
+    var(--shadow-md);
+}
+
+/* Variant: post-it */
+.card--sticky {
+  border-color: transparent;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 8%),
+    0 10px 16px -10px rgb(0 0 0 / 35%);
+  transform: rotate(var(--tilt));
+  padding-top: 16px;
+}
+
+.card--sticky::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 64px;
+  height: 16px;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 45%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+  transform: translateX(-50%) rotate(calc(var(--tilt) * -2));
+  backdrop-filter: blur(1px);
+}
+
+:root[data-theme='dark'] .card--sticky::before {
+  background: rgb(255 255 255 / 18%);
+}
+
+.card--sticky:hover {
+  border-color: transparent;
+  transform: rotate(0deg) translateY(-1px);
+}
+
+/* Variant: outline. The background is mostly neutral, so use theme text. */
+.card--outline {
+  --note-fg: var(--text);
+  --note-muted: var(--text-muted);
+  border: 2px solid var(--note-accent);
+  background: color-mix(in srgb, var(--note-bg) 22%, var(--surface));
+  color: var(--text);
+  box-shadow: none;
+}
+
+.card--outline .card__title {
+  color: color-mix(in srgb, var(--note-accent) 55%, var(--text));
+}
+
+.card--outline:hover {
+  border-color: var(--note-accent);
+}
+
+.card.is-dragging {
+  box-shadow: var(--shadow-lg);
+  transform: rotate(2deg) scale(1.02);
+}
+
+.card.is-done .card__title {
+  opacity: 0.75;
+}
+
+.card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-family: var(--font-ui);
+}
+
+.card__title {
+  font-size: 1em;
+  font-weight: 650;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.card--sticky .card__title,
+.card .card__title {
+  font-family: inherit;
+}
+
+.card__title.is-empty {
+  font-style: italic;
+  font-weight: 500;
+  opacity: 0.55;
+}
+
+.card__content {
+  max-height: 9.5em;
+  overflow: hidden;
+  color: var(--note-muted);
+  font-size: 0.93em;
+}
+
+.card--outline .card__content {
+  color: var(--text-muted);
+}
+
+.card__content.is-clipped {
+  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  mask-image: linear-gradient(to bottom, #000 65%, transparent);
+}
+
+.card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 1px;
+  font-family: var(--font-ui);
+}
+
+/* Chips follow the note's text color so they stay legible on any background. */
+.card .priority-badge {
+  color: color-mix(in srgb, var(--prio) 72%, var(--note-fg));
+}
+
+.card .tag-chip {
+  color: color-mix(in srgb, var(--tag) 62%, var(--note-fg));
+}

@@ -1,0 +1,55 @@
+.due-badge {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: var(--note-muted, var(--text-muted));
+}
+
+.due-badge--overdue {
+  /* Same strong red in both themes, so white text stays readable. */
+  background: #c9343a;
+  color: #fff;
+}
+
+.due-badge--today {
+  background: var(--warning-soft);
+  color: var(--warning);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warning) 35%, transparent);
+}
+
+.due-badge--soon {
+  background: var(--caution-soft);
+  color: var(--caution);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--caution) 30%, transparent);
+}
+
+.due-badge--done {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.checklist-badge {
+  gap: 5px;
+  padding: 0 8px;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: var(--note-muted, var(--text-muted));
+}
+
+.checklist-badge.is-complete {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.checklist-badge__bar {
+  position: relative;
+  width: 28px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.checklist-badge__bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
+  background: currentColor;
+}
