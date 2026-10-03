@@ -6,9 +6,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 6vh 16px 16px;
+  /* No top padding: it would leave a strip above sticky headers where
+     scrolled content shows through. The gap is the modal's margin. */
+  padding: 0 16px;
   background: var(--overlay);
   overflow-y: auto;
+  overscroll-behavior: contain;
   animation: fade-in 0.15s ease-out;
 }
 
@@ -16,6 +19,7 @@
   position: relative;
   width: 100%;
   max-width: 560px;
+  margin: 6vh 0 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-elevated);
@@ -64,12 +68,14 @@
 @media (max-width: 640px) {
   .modal-backdrop {
     padding: 0;
-    align-items: stretch;
   }
 
+  /* Full screen at least, and taller when the content needs it, so the
+     backdrop scrolls (stretching would pin it to the screen height). */
   .modal {
     max-width: none;
     min-height: 100%;
+    margin: 0;
     border: 0;
     border-radius: 0;
   }

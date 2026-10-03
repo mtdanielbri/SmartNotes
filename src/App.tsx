@@ -5,6 +5,7 @@ import { TagManager } from './components/dialogs/TagManager'
 import { TopBar } from './components/topbar/TopBar'
 import { ConfirmDialog } from './components/ui/ConfirmDialog'
 import { Toaster } from './components/ui/Toaster'
+import { useBackClosesOverlays } from './hooks/useBackClosesOverlays'
 import { useGlobalShortcuts } from './hooks/useGlobalShortcuts'
 import { useThemeEffect } from './hooks/useTheme'
 import { syncAcrossTabs } from './store/useBoardStore'
@@ -17,6 +18,7 @@ const CardEditor = lazy(() => import('./components/editor/CardEditor').then((m) 
 export default function App() {
   useThemeEffect()
   useGlobalShortcuts()
+  useBackClosesOverlays()
   useEffect(() => syncAcrossTabs(), [])
   const editingCardId = useUiStore((s) => s.editingCardId)
   const dialog = useUiStore((s) => s.dialog)
