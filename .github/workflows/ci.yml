@@ -20,30 +20,38 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-      - name: Subir la web para GitHub Pages
+      - name: Guardar la web compilada
         if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
+          name: web
           path: dist
-      - name: Avisar si GitHub Pages no está activado
-        if: github.ref == 'refs/heads/main' && !github.event.repository.has_pages
-        run: echo "::warning title=GitHub Pages no está activado::Activa Settings → Pages → Source «GitHub Actions» y vuelve a ejecutar este workflow (Actions → CI y despliegue → Run workflow)."
+          retention-days: 1
 
-  # Publica en GitHub Pages cada push a main, una vez activado
-  # Settings → Pages → Source: "GitHub Actions" (si no, solo avisa).
+  # Cada push a main publica la web en la rama gh-pages, que GitHub Pages
+  # sirve en https://<usuario>.github.io/<repositorio>/.
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event.repository.has_pages
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      pages: write
-      id-token: write
+      contents: write
     concurrency:
-      group: pages
+      group: gh-pages
       cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: web
+      - name: Publicar en la rama gh-pages
+        working-directory: web
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          touch .nojekyll  # servir los archivos tal cual, sin procesarlos con Jekyll
+          git init -q -b gh-pages
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Publicar ${GITHUB_SHA::7}"
+          git push -q --force "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
