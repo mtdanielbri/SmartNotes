@@ -6,6 +6,7 @@ import { InstallButton } from './InstallButton'
 import { SearchBox } from './SearchBox'
 import { SortSelect } from './SortSelect'
 import { ThemeToggle } from './ThemeToggle'
+import { ViewToggle } from './ViewToggle'
 import './TopBar.css'
 
 export function TopBar() {
@@ -22,6 +23,7 @@ export function TopBar() {
         <SearchBox />
         <FilterMenu />
         <SortSelect />
+        <ViewToggle />
       </div>
       <div className="topbar__actions">
         <InstallButton />

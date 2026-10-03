@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { STORAGE_KEY } from '../constants'
-import { BackupError, createBackup, parseAppData, parseBackupFile } from '../lib/backup'
+import { BackupError, createBackup, parseAppData, parseBackupFile, settingsSchema } from '../lib/backup'
 import { createSeedData } from './seed'
 import { findCardLocation, pickAppData, storage, useBoardStore } from './useBoardStore'
 
@@ -94,6 +94,13 @@ describe('board store', () => {
     expect(activeBoard().columns.inProgress).toMatchObject({ title: 'Haciendo', wipLimit: 3, color: '#ff0000' })
     store().updateColumn(board.id, 'inProgress', { title: '   ', wipLimit: 0 })
     expect(activeBoard().columns.inProgress).toMatchObject({ title: 'Haciendo', wipLimit: null })
+  })
+
+  it('remembers the board view and defaults old settings to columns', () => {
+    store().setBoardView('overview')
+    expect(store().settings.boardView).toBe('overview')
+    store().setBoardView('columns')
+    expect(settingsSchema.parse({ theme: 'dark' })).toMatchObject({ theme: 'dark', boardView: 'columns' })
   })
 
   it('persists to localStorage', () => {

@@ -11,6 +11,7 @@ import { notify, useUiStore } from '../../store/useUiStore'
 import { COLUMN_IDS, type Card, type ColumnId } from '../../types'
 import { ColumnTabs, TAB_DROPPABLE_PREFIX } from './ColumnTabs'
 import { ColumnView } from './ColumnView'
+import { OverviewBoard } from './OverviewBoard'
 import './Board.css'
 
 const DRAG_INSTRUCTIONS =
@@ -22,6 +23,7 @@ export function BoardView() {
   const tags = useBoardStore((s) => s.tags)
   const moveCard = useBoardStore((s) => s.moveCard)
   const setSortMode = useBoardStore((s) => s.setSortMode)
+  const overview = useBoardStore((s) => s.settings.boardView === 'overview')
   const filters = useUiStore((s) => s.filters)
   const clearFilters = useUiStore((s) => s.clearFilters)
   const mobileColumn = useUiStore((s) => s.mobileColumn)
@@ -91,6 +93,8 @@ export function BoardView() {
   }
 
   const shownColumns = compact ? [mobileColumn] : COLUMN_IDS
+  // With automatic sorting, reordering inside the same column has no effect.
+  const dropDisabledFor = (columnId: ColumnId) => board.sortMode !== 'manual' && dragSource === columnId
 
   return (
     <DragDropContext
@@ -119,21 +123,26 @@ export function BoardView() {
           )}
         </div>
       )}
-      {compact && <ColumnTabs board={board} counts={counts} />}
-      <div className={compact ? 'board board--compact' : 'board'}>
-        {shownColumns.map((columnId) => (
-          <ColumnView
-            key={columnId}
-            boardId={board.id}
-            column={board.columns[columnId]}
-            cards={visible[columnId]}
-            tags={tags}
-            today={today}
-            // With automatic sorting, reordering inside the same column has no effect.
-            dropDisabled={board.sortMode !== 'manual' && dragSource === columnId}
-          />
-        ))}
-      </div>
+      {overview ? (
+        <OverviewBoard board={board} visible={visible} today={today} dropDisabledFor={dropDisabledFor} />
+      ) : (
+        <>
+          {compact && <ColumnTabs board={board} counts={counts} />}
+          <div className={compact ? 'board board--compact' : 'board'}>
+            {shownColumns.map((columnId) => (
+              <ColumnView
+                key={columnId}
+                boardId={board.id}
+                column={board.columns[columnId]}
+                cards={visible[columnId]}
+                tags={tags}
+                today={today}
+                dropDisabled={dropDisabledFor(columnId)}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </DragDropContext>
   )
 }

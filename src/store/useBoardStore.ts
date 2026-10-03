@@ -7,6 +7,7 @@ import { createId } from '../lib/id'
 import {
   COLUMN_IDS,
   type AppData,
+  type BoardViewMode,
   type Card,
   type CardStyle,
   type ChecklistItem,
@@ -62,11 +63,16 @@ interface Actions {
   replaceData: (data: AppData, settings?: Settings | null) => void
   setTheme: (theme: ThemeMode) => void
   setDefaultCardStyle: (style: CardStyle) => void
+  setBoardView: (view: BoardViewMode) => void
 }
 
 export type BoardState = AppData & { settings: Settings } & Actions
 
-const DEFAULT_SETTINGS: Settings = { theme: 'system', defaultCardStyle: { ...DEFAULT_CARD_STYLE } }
+const DEFAULT_SETTINGS: Settings = {
+  theme: 'system',
+  defaultCardStyle: { ...DEFAULT_CARD_STYLE },
+  boardView: 'columns',
+}
 
 /** Tag colors, in the order they are handed out to new tags. */
 const TAG_COLORS = [7, 4, 8, 2, 9, 5, 3, 1, 6, 0].map((i) => ACCENT_COLORS[i])
@@ -324,6 +330,11 @@ export const useBoardStore = create<BoardState>()(
       setDefaultCardStyle: (style) =>
         set((s) => {
           s.settings.defaultCardStyle = { ...style }
+        }),
+
+      setBoardView: (view) =>
+        set((s) => {
+          s.settings.boardView = view
         }),
     })),
     {

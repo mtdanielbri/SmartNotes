@@ -1,0 +1,371 @@
+/* Bird's-eye view: the whole board on one screen */
+.overview {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 16px 24px;
+}
+
+/* Summary */
+.ov-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+
+.ov-progress {
+  display: flex;
+  flex: 1 1 260px;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.ov-progress__icon {
+  flex: none;
+  color: var(--success);
+}
+
+.ov-progress__label {
+  flex: none;
+}
+
+.ov-progress__label strong {
+  color: var(--text);
+}
+
+.ov-progress__bar {
+  flex: 1;
+  height: 8px;
+  min-width: 60px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--column-bg);
+}
+
+.ov-progress__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--success);
+  transition: width 0.3s ease;
+}
+
+.ov-progress__pct {
+  flex: none;
+  min-width: 34px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--text);
+}
+
+.ov-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ov-chip {
+  --chip: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--chip) 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--chip) 12%, var(--surface));
+  color: var(--chip);
+  font-size: 12.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+button.ov-chip:hover {
+  border-color: var(--chip);
+}
+
+.ov-chip[aria-pressed='true'] {
+  border-color: var(--chip);
+  box-shadow: inset 0 0 0 1px var(--chip);
+}
+
+.ov-chip--overdue {
+  --chip: var(--danger);
+}
+
+.ov-chip--soon {
+  --chip: var(--warning);
+}
+
+.ov-chip--urgent {
+  --chip: #e5484d;
+}
+
+.ov-chip--ok {
+  --chip: var(--success);
+}
+
+/* Columns */
+.ov-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 10px;
+}
+
+.ov-column {
+  min-width: 0;
+  border-radius: 12px;
+  background: var(--column-bg);
+  box-shadow: inset 0 3px 0 var(--column-color);
+}
+
+.ov-column__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 11px 10px 6px;
+  border: 0;
+  border-radius: 12px 12px 0 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.ov-column__header:hover .ov-column__title {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ov-column__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--column-color);
+}
+
+.ov-column__title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ov-column__count {
+  flex: none;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.ov-column__count.is-over {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.ov-column__list {
+  min-height: 52px;
+  padding: 2px 6px 8px;
+  border-radius: 0 0 12px 12px;
+  transition: background-color 0.15s;
+}
+
+.ov-column__list.is-over {
+  background: var(--column-bg-over);
+}
+
+.ov-column__empty {
+  padding: 10px 4px;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  color: var(--text-subtle);
+  font-size: 11.5px;
+  text-align: center;
+}
+
+.ov-item {
+  margin-bottom: 6px;
+  border-radius: 8px;
+}
+
+.ov-item:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.ov-item:focus-visible > .mini-card {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+/* Compact card */
+.mini-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 7px;
+  border: 1px solid color-mix(in srgb, var(--note-accent) 35%, transparent);
+  border-radius: 8px;
+  background: var(--note-bg);
+  color: var(--note-fg);
+  font-size: 12.5px;
+  line-height: 1.3;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.mini-card.has-priority {
+  padding-left: 9px;
+  box-shadow:
+    inset 3px 0 0 var(--prio),
+    var(--shadow-sm);
+}
+
+.mini-card.is-done .mini-card__title {
+  opacity: 0.65;
+}
+
+.mini-card.is-dragging {
+  box-shadow: var(--shadow-lg);
+  transform: rotate(2deg);
+}
+
+.mini-card__title {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.mini-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mini-card__due {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mini-card__due--overdue {
+  background: #c9343a;
+  color: #fff;
+}
+
+.mini-card__due--today {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.mini-card__due--soon {
+  background: var(--caution-soft);
+  color: var(--caution);
+}
+
+.mini-card__progress {
+  flex: 1;
+  min-width: 14px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.mini-card__progress > span {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--success);
+}
+
+/* Phones: four narrow columns still fit side by side */
+@media (max-width: 640px) {
+  .overview {
+    gap: 10px;
+    padding: 10px 8px 20px;
+  }
+
+  .ov-summary {
+    gap: 8px;
+  }
+
+  .ov-progress {
+    flex-basis: 100%;
+  }
+
+  .ov-grid {
+    gap: 5px;
+  }
+
+  .ov-column {
+    border-radius: 10px;
+  }
+
+  .ov-column__header {
+    border-radius: 10px 10px 0 0;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 9px 6px 5px;
+  }
+
+  .ov-column__title {
+    flex-basis: calc(100% - 14px);
+    font-size: 11.5px;
+  }
+
+  .ov-column__count {
+    font-size: 10.5px;
+  }
+
+  .ov-column__list {
+    padding: 2px 4px 6px;
+  }
+
+  .ov-item {
+    margin-bottom: 5px;
+  }
+
+  .mini-card {
+    padding: 5px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .mini-card.has-priority {
+    padding-left: 7px;
+  }
+
+  .mini-card__title {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+
+  .mini-card__due {
+    padding: 0 4px;
+    font-size: 9.5px;
+  }
+}

@@ -7,6 +7,7 @@ Cada tarjeta tiene prioridad, fecha límite, etiquetas, checklist y estilo propi
 
 ## Funciones
 
+- **Vista general** (botón en la barra superior o tecla `V`): todo el tablero de un vistazo, también en el móvil, con el progreso y avisos de lo vencido, lo que vence en 7 días y lo urgente. Toca un aviso para filtrar.
 - **Kanban con arrastrar y soltar**: mueve tarjetas entre columnas o reordénalas, con ratón, en pantallas táctiles (mantén pulsado) o con el teclado (`Espacio` para levantar, flechas para mover).
 - **Prioridades**: Urgente, Alta, Media, Baja o ninguna, con una franja de color en cada tarjeta. Puedes ordenar el tablero por prioridad, por fecha límite o por última edición.
 - **Texto enriquecido**: negrita, cursiva, subrayado, tachado, títulos, listas, citas, enlaces, alineación, color del texto, resaltado, tipo y tamaño de letra.

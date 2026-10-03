@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
+import { useBoardStore } from '../store/useBoardStore'
 import { useUiStore } from '../store/useUiStore'
 
 export const SEARCH_INPUT_ID = 'search-input'
 
-/** `/` search, `N` new card, `?` help. Ignored while typing or in a dialog. */
+/** `/` search, `N` new card, `V` overview, `?` help. Ignored while typing or in a dialog. */
 export function useGlobalShortcuts() {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -18,7 +19,13 @@ export function useGlobalShortcuts() {
         document.getElementById(SEARCH_INPUT_ID)?.focus()
       } else if (event.key === 'n' || event.key === 'N') {
         event.preventDefault()
+        // The composer only exists in the columns view.
+        useBoardStore.getState().setBoardView('columns')
         ui.openComposer('todo')
+      } else if (event.key === 'v' || event.key === 'V') {
+        event.preventDefault()
+        const { settings, setBoardView } = useBoardStore.getState()
+        setBoardView(settings.boardView === 'overview' ? 'columns' : 'overview')
       } else if (event.key === '?') {
         event.preventDefault()
         ui.openDialog('shortcuts')

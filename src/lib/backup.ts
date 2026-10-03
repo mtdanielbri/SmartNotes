@@ -1,6 +1,7 @@
 import * as z from 'zod/mini'
 import { ACCENT_COLORS, COLUMN_DEFAULTS, DEFAULT_CARD_STYLE, MAX_TITLE_LENGTH } from '../constants'
 import {
+  BOARD_VIEWS,
   CARD_VARIANTS,
   COLUMN_IDS,
   FONT_KEYS,
@@ -161,8 +162,9 @@ export const settingsSchema = z.catch(
   z.object({
     theme: z.catch(z.enum(THEME_MODES), 'system'),
     defaultCardStyle: cardStyleSchema,
+    boardView: z.catch(z.enum(BOARD_VIEWS), 'columns'),
   }),
-  () => ({ theme: 'system' as const, defaultCardStyle: { ...DEFAULT_CARD_STYLE } }),
+  () => ({ theme: 'system' as const, defaultCardStyle: { ...DEFAULT_CARD_STYLE }, boardView: 'columns' as const }),
 )
 
 /**

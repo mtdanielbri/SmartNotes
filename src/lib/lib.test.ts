@@ -141,6 +141,9 @@ describe('filters', () => {
     expect(cardMatchesFilters(c, filters({ due: 'noDate' }), ctx)).toBe(false)
     expect(cardMatchesFilters(card({ id: 'b', dueDate: '2026-10-09' }), filters({ due: 'week' }), ctx)).toBe(true)
     expect(cardMatchesFilters(card({ id: 'b', dueDate: '2026-10-10' }), filters({ due: 'week' }), ctx)).toBe(false)
+    const doneCtx = { ...ctx, columnId: 'done' as const }
+    expect(cardMatchesFilters(card({ id: 'c', dueDate: '2026-10-03' }), filters({ due: 'today' }), doneCtx)).toBe(false)
+    expect(cardMatchesFilters(card({ id: 'c', dueDate: '2026-10-05' }), filters({ due: 'week' }), doneCtx)).toBe(false)
   })
 
   it('counts active filters', () => {

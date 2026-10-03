@@ -30,16 +30,17 @@ export function cardMatchesFilters(card: Card, filters: Filters, ctx: MatchConte
   if (filters.tagIds.length > 0 && !filters.tagIds.some((id) => card.tagIds.includes(id))) return false
 
   const due = card.dueDate
+  // Due-date filters are about pending work: finished cards never match.
+  const pending = ctx.columnId !== 'done'
   switch (filters.due) {
     case 'overdue':
-      // A finished task is not overdue anymore.
-      if (!due || ctx.columnId === 'done' || daysBetween(ctx.today, due) >= 0) return false
+      if (!due || !pending || daysBetween(ctx.today, due) >= 0) return false
       break
     case 'today':
-      if (due !== ctx.today) return false
+      if (due !== ctx.today || !pending) return false
       break
     case 'week':
-      if (!due || due < ctx.today || due > addDays(ctx.today, 6)) return false
+      if (!due || !pending || due < ctx.today || due > addDays(ctx.today, 6)) return false
       break
     case 'noDate':
       if (due) return false

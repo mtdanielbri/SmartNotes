@@ -33,6 +33,10 @@ export type CardVariant = (typeof CARD_VARIANTS)[number]
 export const THEME_MODES = ['light', 'dark', 'system'] as const
 export type ThemeMode = (typeof THEME_MODES)[number]
 
+/** "columns": the normal kanban; "overview": every column at a glance. */
+export const BOARD_VIEWS = ['columns', 'overview'] as const
+export type BoardViewMode = (typeof BOARD_VIEWS)[number]
+
 export interface CardStyle {
   /** Palette key (adapts to light/dark theme) or a custom `#rrggbb` color. */
   color: NoteColor | string
@@ -96,6 +100,7 @@ export interface Settings {
   theme: ThemeMode
   /** Style given to newly created cards. */
   defaultCardStyle: CardStyle
+  boardView: BoardViewMode
 }
 
 export type DueFilter = 'all' | 'overdue' | 'today' | 'week' | 'noDate'
