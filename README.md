@@ -49,11 +49,13 @@ Abre <http://localhost:5173>. La primera vez verás un tablero de ejemplo; borra
 
 ## Publicarla gratis en GitHub Pages
 
-El workflow `.github/workflows/ci.yml` pasa el linter, los tests y el build en cada push. En la rama `main` también publica la app:
+El workflow `.github/workflows/ci.yml` pasa el linter, los tests y el build en cada push. En la rama `main` también publica la app. Para activarlo (solo la primera vez):
 
-1. En GitHub, ve a **Settings → Pages** y en **Source** elige **GitHub Actions**.
-2. Haz push (o merge) a `main`.
-3. La app quedará en `https://<tu-usuario>.github.io/<repositorio>/`. Desde el móvil, ábrela y usa «Añadir a pantalla de inicio» para instalarla.
+1. **Settings → General → Default branch**: elige `main`. GitHub Pages solo publica desde la rama por defecto.
+2. **Settings → Pages → Build and deployment → Source**: elige **GitHub Actions**.
+3. **Actions → CI y despliegue → Run workflow** (en `main`). A partir de ahí, cada push a `main` se publica solo.
+
+La app quedará en `https://<tu-usuario>.github.io/<repositorio>/` (en este repo, <https://mtdanielbri.github.io/SmartNotes/>). Desde el móvil, ábrela y usa «Añadir a pantalla de inicio» para instalarla.
 
 La versión final usa rutas relativas, así que funciona en cualquier subcarpeta o servidor estático (Netlify, Vercel, Cloudflare Pages…).
 

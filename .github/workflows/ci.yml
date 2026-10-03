@@ -25,11 +25,14 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
+      - name: Avisar si GitHub Pages no está activado
+        if: github.ref == 'refs/heads/main' && !github.event.repository.has_pages
+        run: echo "::warning title=GitHub Pages no está activado::Activa Settings → Pages → Source «GitHub Actions» y vuelve a ejecutar este workflow (Actions → CI y despliegue → Run workflow)."
 
-  # Publica en GitHub Pages cada push a main.
-  # Requiere activar Settings → Pages → Source: "GitHub Actions".
+  # Publica en GitHub Pages cada push a main, una vez activado
+  # Settings → Pages → Source: "GitHub Actions" (si no, solo avisa).
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event.repository.has_pages
     needs: build
     runs-on: ubuntu-latest
     permissions:
