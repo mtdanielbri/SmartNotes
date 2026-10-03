@@ -17,7 +17,7 @@ Cada tarjeta tiene prioridad, fecha límite, etiquetas, checklist y estilo propi
 - **Etiquetas**, **búsqueda** (ignora mayúsculas y acentos) y **filtros** por prioridad, etiqueta y fecha.
 - **Varios tableros** (por ejemplo, Trabajo y Personal), y puedes mover tarjetas de un tablero a otro.
 - **Modo oscuro** (claro, oscuro o el del sistema).
-- **Funciona sin conexión** y se puede **instalar como app** (PWA) en el móvil o el ordenador.
+- **Funciona sin conexión** y se puede **instalar como app** (PWA) en el móvil o el ordenador, con el botón «Instalar app» que aparece arriba cuando el navegador lo permite.
 - **Copia de seguridad**: exporta e importa todos tus datos en un archivo JSON.
 - **Deshacer** al borrar una tarjeta y **atajos de teclado** (pulsa `?` dentro de la app).
 

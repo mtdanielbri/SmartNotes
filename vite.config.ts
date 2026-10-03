@@ -13,6 +13,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
+        // Explicit identity. Changing id/start_url makes browsers treat the
+        // app as a new one (used once to clear a stuck "already installed").
+        id: 'smartnotes',
+        start_url: './?source=pwa',
+        scope: './',
         name: 'SmartNotes · Notas kanban',
         short_name: 'SmartNotes',
         description: 'Notas en un tablero kanban con prioridades, etiquetas, fechas límite y estilos a tu gusto.',

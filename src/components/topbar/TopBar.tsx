@@ -2,6 +2,7 @@ import { Logo } from '../Logo'
 import { AppMenu } from './AppMenu'
 import { BoardSwitcher } from './BoardSwitcher'
 import { FilterMenu } from './FilterMenu'
+import { InstallButton } from './InstallButton'
 import { SearchBox } from './SearchBox'
 import { SortSelect } from './SortSelect'
 import { ThemeToggle } from './ThemeToggle'
@@ -23,6 +24,7 @@ export function TopBar() {
         <SortSelect />
       </div>
       <div className="topbar__actions">
+        <InstallButton />
         <ThemeToggle />
         <AppMenu />
       </div>

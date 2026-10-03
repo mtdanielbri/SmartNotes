@@ -295,6 +295,23 @@
   color: var(--text);
 }
 
+/* Only rendered when the browser allows installing the app. */
+.install-btn {
+  margin-right: 4px;
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.install-btn > svg {
+  color: currentColor;
+}
+
+.install-btn:hover:not(:disabled) {
+  border-color: var(--primary-hover);
+  background: var(--primary-soft);
+}
+
 /* Filter popover */
 .filter-menu {
   width: 340px;
@@ -349,6 +366,11 @@
 
   .board-switcher__name {
     max-width: none;
+  }
+
+  .install-btn {
+    width: 36px;
+    padding: 0;
   }
 
   .sort-select select {
